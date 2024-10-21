@@ -1,3 +1,5 @@
-import Client from './client.ts'
+import Client from './client.ts';
 
-export default Client;
+export {
+    Client
+};
