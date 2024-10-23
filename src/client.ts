@@ -9,7 +9,7 @@ export default class Client {
     this.bearerToken = bearerToken;
   }
 
-  async filter(sort: string = "id", direction: string = "ASC", count: number = 10000, offset?: string) {
+  async listFilters(sort: string = "id", direction: string = "ASC", count: number = 10000, offset?: string) {
     const headers = new Headers();
     headers.set('X-Makaira-Instance', this.instanceId);
     headers.set('Content-Type', 'application/json');
@@ -22,7 +22,19 @@ export default class Client {
         offset: offset ?? 0,
         count
       }),
-      method: "POST"
+      method: 'POST'
+    });
+    return await res.json();
+  }
+
+  async listAggregations() {
+    const headers = new Headers();
+    headers.set('X-Makaira-Instance', this.instanceId);
+    headers.set('Content-Type', 'application/json');
+    headers.set('Authorization', `Bearer ${this.bearerToken}`);
+    const res = await fetch(`https://${this.customer}.makaira.io/aggregation`, {
+      headers,
+      method: 'GET'
     });
     return await res.json();
   }
